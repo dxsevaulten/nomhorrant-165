@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Nomhorrant.UI</RootNamespace>
+    <AssemblyName>Nomhorrant.UI</AssemblyName>
+    <Version>0.1.0</Version>
+    <RhinoDir Condition="'$(RhinoDir)' == ''">C:\Program Files\Rhino 8</RhinoDir>
+  </PropertyGroup>
+
+  <!-- Eto: UI cross-platform yang dipakai Rhino 8 (Windows & macOS). -->
+  <ItemGroup>
+    <PackageReference Include="Eto.Forms" Version="2.8.3" />
+  </ItemGroup>
+
+  <!-- Referensi Rhino opsional: saat dibangun di mesin tanpa Rhino, Evolve Panel tetap bisa dipakai standalone. -->
+  <ItemGroup Condition="Exists('$(RhinoDir)\RhinoCommon.dll')">
+    <Reference Include="RhinoCommon">
+      <HintPath>$(RhinoDir)\RhinoCommon.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nomhorrant.Core\Nomhorrant.Core.csproj" />
+  </ItemGroup>
+</Project>

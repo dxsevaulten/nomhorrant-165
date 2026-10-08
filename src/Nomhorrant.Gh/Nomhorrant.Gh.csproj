@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Nomhorrant.Gh</RootNamespace>
+    <AssemblyName>Nomhorrant.Gh</AssemblyName>
+    <Version>0.1.0</Version>
+    <!-- Lokasi instalasi Rhino 8; override: dotnet build -p:RhinoDir="D:\Rhino 8" -->
+    <RhinoDir Condition="'$(RhinoDir)' == ''">C:\Program Files\Rhino 8</RhinoDir>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="RhinoCommon">
+      <HintPath>$(RhinoDir)\RhinoCommon.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Grasshopper">
+      <HintPath>$(RhinoDir)\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="GH_IO">
+      <HintPath>$(RhinoDir)\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nomhorrant.Core\Nomhorrant.Core.csproj" />
+  </ItemGroup>
+
+  <!-- .gha = assembly Grasshopper -->
+  <Target Name="RenameToGha" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(TargetDir)$(AssemblyName).gha" />
+  </Target>
+</Project>

@@ -1,0 +1,24 @@
+# Hasil build
+bin/
+obj/
+*.user
+*.gha
+*.yak
+
+# Kredensial & konfigurasi lokal — JANGAN PERNAH di-commit
+config.local.json
+*.key
+*.pem
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vs/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.pyc

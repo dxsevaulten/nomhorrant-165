@@ -1,0 +1,17 @@
+name: nomhorrant-165
+version: 0.1.0
+authors:
+  - dxsevaulten
+description: >-
+  Asisten AI terintegrasi untuk Grasshopper (Rhino 8) — action protocol,
+  AI vision, skill runner, dan Evolve UI untuk kerja sama manusia-AI
+  di kanvas parametrik.
+url: https://github.com/dxsevaulten/Nomhorrant-165
+keywords:
+  - grasshopper
+  - rhino
+  - ai
+  - mcp
+  - parametric
+  - vision
+  - automation

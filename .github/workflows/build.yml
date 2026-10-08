@@ -1,0 +1,45 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  python-checks:
+    name: Cek sintaks Python & MCP
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: py_compile
+        run: python3 -m py_compile python/*.py mcp/server.py tools/gen_access_hash.py
+      - name: smoke test MCP handshake
+        run: |
+          printf '%s\n' \
+            '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' \
+            '{"jsonrpc":"2.0","id":2,"method":"tools/list"}' \
+            | python3 mcp/server.py
+
+  # Build assembly .gha/.yak butuh Rhino 8 (RhinoCommon/Grasshopper.dll) di Windows.
+  # Jalankan lokal: dotnet build Nomhorrant-165.sln -c Release && yak build
+  dotnet-build:
+    name: Build .NET (Windows, Rhino 8 diperlukan)
+    runs-on: windows-latest
+    if: ${{ vars.RHINO_INSTALLED == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - name: Build
+        run: dotnet build Nomhorrant-165.sln -c Release
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nomhorrant-165-gha
+          path: src/**/bin/Release/**
